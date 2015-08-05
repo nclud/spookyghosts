@@ -2,6 +2,12 @@ var bodyLength = 3;//url, position, ghost id
 
 var numGhosts = 10;
 
+var xMin = -200;
+var xMax = 200;
+
+var yMin = -50;
+var yMax = 150;
+
 function verifyQuery(query){
 
   var errors = "";
@@ -18,9 +24,9 @@ function verifyQuery(query){
     var x = parseFloat(query.position.x);
     var y = parseFloat(query.position.y);
 
-    if(isNaN(x) || x < 0 || x > 100)
+    if(isNaN(x) || x < xMin || x > xMax)
       errors += "Invalid X\n";
-    if(isNaN(y) || y < 0 || y > 100)
+    if(isNaN(y) || y < yMin || y > yMax)
       errors += "Invalid Y\n";
   }
 
