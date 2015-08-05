@@ -15,8 +15,8 @@ function verifyQuery(query){
     errors += "Invalid position object\n";
   else {
 
-    var x = parseFloat(position.x);
-    var y = parseFloat(position.y);
+    var x = parseFloat(query.position.x);
+    var y = parseFloat(query.position.y);
 
     if(isNaN(x) || x < 0 || x > 100)
       errors += "Invalid X\n";
@@ -47,11 +47,37 @@ function verifyQuery(query){
 
 }
 
+Router.route('/getspooked/:url', function(){
+
+    var url = this.params.url;
+
+    var req = this.request;
+    var res = this.response;
+
+    var ghostResponse = {ghosts: undefined}
+
+    var boorl = BooRLs.findOne({url: url});
+
+
+    var ghostArray = boorl && boorl.ghosts || [];
+
+    ghostResponse.ghosts = ghostArray;
+
+    res.writeHead(200, {'Content-Type': 'application/json'});
+    res.write(JSON.stringify(ghostResponse));
+    res.end();
+
+  }, {
+    where: 'server'
+  }
+)
+
 Router.route('/spook/', function(){
 
 
     var req = this.request;
     var res = this.response;
+    var body = req.body;
 
     if(req.method !== "POST"){
       res.writeHead(400, {'Content-Type': 'text/plain'});
@@ -59,7 +85,7 @@ Router.route('/spook/', function(){
       return res.end();
     }
 
-    var verification = verifyQuery(req.body);
+    var verification = verifyQuery(body);
 
     if(verification.status === false){
       res.writeHead(400, {'Content-Type': 'text/plain'});
@@ -72,19 +98,19 @@ Router.route('/spook/', function(){
 
     var query = {};
 
-    query["ghostId"] = parseInt(req.body.ghostId);
+    query["ghostId"] = parseInt(body.ghostId);
 
-    query["position"] = req.body.position;
+    query["position"] = body.position;
 
     query["timestamp"] = Date.now();
 
 
-    var search = BooRLs.findOne({url: req.body.url});
+    var search = BooRLs.findOne({url: body.url});
 
     var id = search && search._id;
 
     if(id === undefined){
-      id = BooRLs.insert({url: req.body.url, ghosts: []})
+      id = BooRLs.insert({url: body.url, ghosts: []})
     }
 
     var updateId = BooRLs.update({_id: id}, {
@@ -103,7 +129,6 @@ Router.route('/spook/', function(){
       return res.end();
     }
 
-
     /*
       Ideal contents of POST's body
 
@@ -119,9 +144,9 @@ Router.route('/spook/', function(){
     */
 
     res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.write("Great success! http://media.giphy.com/media/xGyOYkLvq8pTa/giphy.gif")
-  },
-  {
+    res.write("Great success! http://media.giphy.com/media/xGyOYkLvq8pTa/giphy.gif");
+    res.end();
+  }, {
     where: 'server'
   }
 );
