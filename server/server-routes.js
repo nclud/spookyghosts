@@ -74,7 +74,7 @@ Router.route('/getspooked/:url', function(){
   }
 )
 
-Router.route('/spook/', function(){
+Router.route('/ghostpost/', function(){//or postergeist?
 
 
     var req = this.request;
