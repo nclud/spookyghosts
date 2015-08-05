@@ -5,9 +5,6 @@ var numGhosts = 10;
 var xMin = -200;
 var xMax = 200;
 
-var yMin = -50;
-var yMax = 150;
-
 function verifyQuery(query){
 
   var errors = "";
@@ -26,8 +23,6 @@ function verifyQuery(query){
 
     if(isNaN(x) || x < xMin || x > xMax)
       errors += "Invalid X\n";
-    if(isNaN(y) || y < yMin || y > yMax)
-      errors += "Invalid Y\n";
   }
 
   if(query.ghostSrc === undefined)
