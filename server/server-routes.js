@@ -24,12 +24,8 @@ function verifyQuery(query){
       errors += "Invalid Y\n";
   }
 
-  if(query.ghostId === undefined)
+  if(query.ghostSrc === undefined)
     errors += "No ghost ID defined\n";
-
-  if(isNaN(parseInt(query.ghostId)))
-    errors += "Invalid ghost ID\n"
-
 
 
   if(!query.url)
@@ -98,7 +94,7 @@ Router.route('/spook/', function(){
 
     var query = {};
 
-    query["ghostId"] = parseInt(body.ghostId);
+    query["ghostSrc"] = body.ghostSrc;
 
     query["position"] = body.position;
 
@@ -134,7 +130,7 @@ Router.route('/spook/', function(){
 
       {
         url: (string url),
-        ghostId: (int ghostId),
+        ghostSrc: (int ghostSrc),
         position: {
           x: (int xPercentage),
           y: (int yPercentage)

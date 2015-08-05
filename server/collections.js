@@ -8,7 +8,7 @@ BooRLs = new Meteor.Collection('boorls');
 		url: [String url],
 		ghosts: [
 			{
-				ghostId: (int ghostId),
+				ghostSrc: (String ghostSrc),
 				position: {
 					x: (int xPercentage),
 					y: (int yPercentage)
