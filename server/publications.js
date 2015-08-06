@@ -1,4 +1,20 @@
-BooRLs = new Meteor.Collection('boorls');
+BooRLs.allow({
+
+	insert: function(){
+		return false;
+	},
+	update: function(){
+		return false;
+	},
+	remove: function(){
+		return false;
+	}
+
+});
+
+Meteor.publish('boorls', function(){
+	return BooRLs.find({});
+})
 
 /*Schema
 
@@ -15,7 +31,9 @@ BooRLs = new Meteor.Collection('boorls');
 				},
 				timeStamp: (timestamp)
 			}, ...
-		]
+		],
+		spooks: 0,
+		lastUpdated: [timestamp]
 
 	}
 

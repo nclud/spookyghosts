@@ -117,6 +117,12 @@ Router.route('/ghostpost/', function(){//or postergeist?
           $sort: {timestamp: 1},
           $slice: -1 * numGhosts
         }
+      },
+      $set: {
+        lastUpdated: Date.now()
+      },
+      $inc: {
+        spooks: 1
       }
     });
 
